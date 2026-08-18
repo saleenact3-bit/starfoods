@@ -2,19 +2,15 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-items = [
-    {"name": "Chocolate Cake", "price": 450, "emoji": "🍫🍰"},
-    {"name": "Birthday Cake", "price": 550, "emoji": "🎂"},
-    {"name": "Red Velvet Cake", "price": 600, "emoji": "❤️🍰"},
-    {"name": "Black Forest Cake", "price": 500, "emoji": "🍒🍰"},
-    {"name": "Butter Cake", "price": 350, "emoji": "🧈🍰"},
-    {"name": "Cream Cake", "price": 400, "emoji": "🍰✨"},
-    {"name": "Banana Chips", "price": 120, "emoji": "🍌"},
-    {"name": "Potato Chips", "price": 100, "emoji": "🥔"},
-    {"name": "Murukku", "price": 150, "emoji": "🥨"},
-    {"name": "Mixture", "price": 130, "emoji": "🥜"},
-    {"name": "Nippattu", "price": 140, "emoji": "🍪"},
-    {"name": "Sweet Cookies", "price": 180, "emoji": "🍪"},
+products = [
+    {"name": "Banana Chips", "price": 120, "emoji": "🥔", "category": "chips"},
+    {"name": "Potato Chips", "price": 100, "emoji": "🥔", "category": "chips"},
+    {"name": "Spicy Murukku", "price": 150, "emoji": "🥨", "category": "snacks"},
+    {"name": "Butter Murukku", "price": 160, "emoji": "🥨", "category": "snacks"},
+    {"name": "Special Mixture", "price": 140, "emoji": "🥜", "category": "snacks"},
+    {"name": "Nippattu", "price": 130, "emoji": "🍘", "category": "snacks"},
+    {"name": "Masala Peanuts", "price": 110, "emoji": "🥜", "category": "snacks"},
+    {"name": "Spicy Mixture", "price": 150, "emoji": "🌶️", "category": "snacks"},
 ]
 
 HTML = """
@@ -22,11 +18,10 @@ HTML = """
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Starfoods Bakery</title>
+<title>Starfoods | Crispy Snacks</title>
 
 <style>
 
@@ -42,41 +37,42 @@ html {
 
 body {
     font-family: Arial, sans-serif;
-    background: #fff8f1;
-    color: #3d2115;
+    background: #fff8ed;
+    color: #35180d;
     overflow-x: hidden;
 }
 
 
-/* ================= NAVBAR ================= */
+/* NAVBAR */
 
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    z-index: 1000;
+
+    padding: 18px 7%;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 18px 8%;
-
-    background: rgba(255,255,255,0.90);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(12px);
 
-    box-shadow: 0 3px 20px rgba(0,0,0,0.08);
+    z-index: 1000;
+
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
 }
 
 .logo {
     font-size: 30px;
     font-weight: 900;
-    color: #d85b28;
-    letter-spacing: 1px;
+    color: #d94d18;
 }
 
 .logo span {
-    color: #6b351e;
+    color: #442015;
 }
 
 .nav-links {
@@ -86,21 +82,21 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: #4b2b20;
+    color: #442015;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 .nav-links a:hover {
-    color: #e7652d;
+    color: #e4581c;
 }
 
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero {
     min-height: 100vh;
-    padding: 150px 8% 80px;
+
+    padding: 150px 7% 80px;
 
     display: flex;
     align-items: center;
@@ -110,178 +106,230 @@ body {
     overflow: hidden;
 
     background:
-        radial-gradient(circle at 80% 20%, #ffd6b8, transparent 30%),
-        linear-gradient(135deg, #fff7ef, #ffe3cf);
+        radial-gradient(circle at 80% 30%, #ffd09d, transparent 30%),
+        linear-gradient(135deg, #fff8ed, #ffe1bd);
 }
 
 .hero-content {
-    max-width: 600px;
-    z-index: 2;
+    width: 50%;
+    z-index: 5;
 
-    animation: slideLeft 1s ease;
+    animation: slideIn 1s ease;
 }
 
-.hero h1 {
-    font-size: 65px;
+.hero-content h1 {
+    font-size: 68px;
     line-height: 1.05;
     margin-bottom: 20px;
 }
 
-.hero h1 span {
-    color: #df612b;
+.hero-content h1 span {
+    color: #e0521b;
 }
 
-.hero p {
+.hero-content p {
     font-size: 20px;
     line-height: 1.7;
-    color: #765447;
+    color: #765448;
+    max-width: 550px;
     margin-bottom: 30px;
 }
 
-.hero-btn {
+.hero-button {
     display: inline-block;
 
     padding: 15px 30px;
 
-    background: #df612b;
+    background: #e0521b;
     color: white;
+
+    text-decoration: none;
 
     border-radius: 30px;
 
-    text-decoration: none;
     font-weight: bold;
 
-    box-shadow: 0 10px 25px rgba(223,97,43,0.35);
+    box-shadow: 0 12px 30px rgba(224,82,27,0.35);
 
     transition: 0.3s;
 }
 
-.hero-btn:hover {
-    transform: translateY(-5px) scale(1.04);
+.hero-button:hover {
+    transform: translateY(-5px) scale(1.05);
 }
 
 
-/* ================= HERO CAKE ================= */
+/* SNACK ANIMATION AREA */
 
-.hero-cake {
+.snack-scene {
+    width: 48%;
+    height: 480px;
+
     position: relative;
-    width: 400px;
-    height: 400px;
 
     display: flex;
-    align-items: center;
     justify-content: center;
-
-    animation: cakeFloat 4s ease-in-out infinite;
+    align-items: center;
 }
 
-.cake-circle {
-    position: absolute;
 
-    width: 350px;
-    height: 350px;
+/* PLATE */
+
+.plate {
+    width: 330px;
+    height: 330px;
+
+    position: absolute;
 
     border-radius: 50%;
 
-    background: #ffd0ad;
+    background: #fff;
+
+    border: 12px solid #f0e2d3;
 
     box-shadow:
-        0 20px 60px rgba(0,0,0,0.15),
-        inset 0 0 40px rgba(255,255,255,0.5);
-}
+        0 25px 50px rgba(80,40,15,0.2),
+        inset 0 0 30px rgba(0,0,0,0.06);
 
-.cake-emoji {
-    position: relative;
-    z-index: 2;
-
-    font-size: 180px;
-
-    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
+    animation: plateFloat 4s ease-in-out infinite;
 }
 
 
-/* ================= FLOATING ITEMS ================= */
+/* SNACKS */
 
-.float-item {
+.snack {
     position: absolute;
-    font-size: 50px;
-    z-index: 3;
 
-    animation: floating 4s ease-in-out infinite;
+    font-size: 75px;
+
+    z-index: 5;
+
+    filter: drop-shadow(
+        0 12px 10px rgba(0,0,0,0.18)
+    );
 }
 
-.float1 {
-    top: 20px;
+.snack1 {
+    top: 85px;
+    left: 50px;
+
+    animation: snackMove1 3s ease-in-out infinite;
+}
+
+.snack2 {
+    top: 40px;
     right: 40px;
+
+    animation: snackMove2 3.5s ease-in-out infinite;
 }
 
-.float2 {
+.snack3 {
+    bottom: 65px;
+    left: 100px;
+
+    animation: snackMove3 4s ease-in-out infinite;
+}
+
+.snack4 {
     bottom: 50px;
-    left: 10px;
+    right: 70px;
+
+    animation: snackMove4 3.2s ease-in-out infinite;
+}
+
+
+/* FLOATING PARTICLES */
+
+.particle {
+    position: absolute;
+
+    font-size: 30px;
+
+    animation: particleFloat 5s ease-in-out infinite;
+}
+
+.p1 {
+    top: 20px;
+    left: 30%;
+}
+
+.p2 {
+    top: 55%;
+    right: 5%;
     animation-delay: 1s;
 }
 
-.float3 {
-    top: 100px;
-    left: -20px;
+.p3 {
+    bottom: 10px;
+    left: 20%;
     animation-delay: 2s;
 }
 
-
-/* ================= SECTION ================= */
-
-.section {
-    padding: 90px 8%;
+.p4 {
+    top: 25%;
+    right: 20%;
+    animation-delay: 1.5s;
 }
 
-.section-title {
+
+/* PRODUCTS */
+
+.products {
+    padding: 90px 7%;
+}
+
+.title {
     text-align: center;
     margin-bottom: 50px;
 }
 
-.section-title h2 {
-    font-size: 40px;
+.title h2 {
+    font-size: 42px;
     margin-bottom: 10px;
 }
 
-.section-title p {
-    color: #87695c;
+.title p {
+    color: #87695d;
 }
 
 
-/* ================= FILTER BUTTONS ================= */
+/* FILTERS */
 
 .filters {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
-.filter-btn {
+.filter {
     border: none;
+
+    background: #ffe0c4;
+
+    color: #572719;
+
     padding: 12px 22px;
+
     margin: 5px;
 
     border-radius: 25px;
 
-    background: #ffe2d0;
-    color: #6b351e;
-
     cursor: pointer;
+
     font-weight: bold;
 
     transition: 0.3s;
 }
 
-.filter-btn:hover {
-    background: #df612b;
+.filter:hover {
+    background: #e0521b;
     color: white;
     transform: translateY(-3px);
 }
 
 
-/* ================= FOOD CARDS ================= */
+/* PRODUCT GRID */
 
-.food-grid {
+.grid {
     display: grid;
 
     grid-template-columns:
@@ -293,18 +341,17 @@ body {
 .card {
     background: white;
 
-    padding: 25px;
+    padding: 28px;
 
     border-radius: 25px;
 
     text-align: center;
 
-    box-shadow:
-        0 10px 30px rgba(70,35,20,0.08);
+    box-shadow: 0 10px 30px rgba(70,30,10,0.08);
 
     transition: 0.4s;
 
-    animation: cardAppear 0.8s ease both;
+    animation: cardIn 0.8s ease;
 }
 
 .card:hover {
@@ -313,10 +360,10 @@ body {
         rotate(1deg);
 
     box-shadow:
-        0 20px 40px rgba(70,35,20,0.15);
+        0 20px 40px rgba(70,30,10,0.16);
 }
 
-.food-icon {
+.product-icon {
     font-size: 75px;
 
     margin-bottom: 18px;
@@ -326,29 +373,32 @@ body {
     transition: 0.4s;
 }
 
-.card:hover .food-icon {
+.card:hover .product-icon {
     transform:
-        scale(1.15)
-        rotate(-5deg);
+        scale(1.2)
+        rotate(-8deg);
 }
 
 .card h3 {
+    margin-bottom: 12px;
     font-size: 21px;
-    margin-bottom: 10px;
 }
 
 .price {
-    color: #df612b;
+    color: #e0521b;
+
     font-size: 21px;
+
     font-weight: bold;
 
     margin-bottom: 18px;
 }
 
-.order-btn {
+.order {
     border: none;
 
-    background: #6b351e;
+    background: #4a2115;
+
     color: white;
 
     padding: 11px 25px;
@@ -362,21 +412,22 @@ body {
     transition: 0.3s;
 }
 
-.order-btn:hover {
-    background: #df612b;
-    transform: scale(1.05);
+.order:hover {
+    background: #e0521b;
+    transform: scale(1.08);
 }
 
 
-/* ================= ABOUT ================= */
+/* ABOUT */
 
 .about {
-    background: #6b351e;
+    padding: 90px 10%;
+
+    background: #4a2115;
+
     color: white;
 
     text-align: center;
-
-    padding: 80px 10%;
 }
 
 .about h2 {
@@ -385,19 +436,20 @@ body {
 }
 
 .about p {
-    max-width: 700px;
+    max-width: 750px;
+
     margin: auto;
 
     line-height: 1.8;
 
-    color: #f4ddd1;
+    color: #ead7cd;
 }
 
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 footer {
-    background: #2b1710;
+    background: #24100a;
 
     color: white;
 
@@ -407,14 +459,14 @@ footer {
 }
 
 footer h2 {
-    color: #ff9b69;
+    color: #ff925d;
     margin-bottom: 10px;
 }
 
 
-/* ================= ANIMATIONS ================= */
+/* ANIMATIONS */
 
-@keyframes slideLeft {
+@keyframes slideIn {
 
     from {
         opacity: 0;
@@ -428,35 +480,85 @@ footer h2 {
 }
 
 
-@keyframes cakeFloat {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-18px);
-    }
-}
-
-
-@keyframes floating {
+@keyframes plateFloat {
 
     0%, 100% {
         transform: translateY(0) rotate(0deg);
     }
 
     50% {
-        transform: translateY(-20px) rotate(10deg);
+        transform: translateY(-15px) rotate(4deg);
     }
 }
 
 
-@keyframes cardAppear {
+@keyframes snackMove1 {
+
+    0%, 100% {
+        transform: translate(0,0) rotate(-10deg);
+    }
+
+    50% {
+        transform: translate(15px,-25px) rotate(15deg);
+    }
+}
+
+
+@keyframes snackMove2 {
+
+    0%, 100% {
+        transform: translate(0,0) rotate(10deg);
+    }
+
+    50% {
+        transform: translate(-20px,-30px) rotate(-15deg);
+    }
+}
+
+
+@keyframes snackMove3 {
+
+    0%, 100% {
+        transform: translate(0,0) rotate(5deg);
+    }
+
+    50% {
+        transform: translate(20px,-20px) rotate(-10deg);
+    }
+}
+
+
+@keyframes snackMove4 {
+
+    0%, 100% {
+        transform: translate(0,0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translate(-15px,-25px) rotate(12deg);
+    }
+}
+
+
+@keyframes particleFloat {
+
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translateY(-30px);
+        opacity: 1;
+    }
+}
+
+
+@keyframes cardIn {
 
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(35px);
     }
 
     to {
@@ -466,9 +568,9 @@ footer h2 {
 }
 
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
 
     .nav-links {
         display: none;
@@ -477,26 +579,25 @@ footer h2 {
     .hero {
         flex-direction: column;
         text-align: center;
-        padding-top: 130px;
     }
 
-    .hero h1 {
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-content h1 {
         font-size: 45px;
     }
 
-    .hero-cake {
-        width: 320px;
-        height: 320px;
-        margin-top: 40px;
+    .snack-scene {
+        width: 100%;
+        height: 400px;
+        margin-top: 30px;
     }
 
-    .cake-circle {
+    .plate {
         width: 280px;
         height: 280px;
-    }
-
-    .cake-emoji {
-        font-size: 130px;
     }
 
 }
@@ -518,10 +619,15 @@ footer h2 {
     </div>
 
     <div class="nav-links">
+
         <a href="#home">Home</a>
-        <a href="#menu">Menu</a>
+
+        <a href="#products">Snacks</a>
+
         <a href="#about">About</a>
+
         <a href="#contact">Contact</a>
+
     </div>
 
 </nav>
@@ -534,43 +640,60 @@ footer h2 {
     <div class="hero-content">
 
         <h1>
-            Sweet Moments
-            <br>
-            Start With
-            <span>Starfoods!</span>
+            Taste The
+            <span>Crunch!</span>
         </h1>
 
         <p>
-            Freshly baked cakes, crispy chips,
-            traditional murukku and delicious
-            bakery snacks made with love.
+            Welcome to Starfoods — your place for
+            crispy chips, traditional murukku,
+            spicy mixture and delicious snacks.
         </p>
 
-        <a href="#menu" class="hero-btn">
-            🍰 Explore Our Menu
+        <a class="hero-button" href="#products">
+            🛍️ Explore Snacks
         </a>
 
     </div>
 
 
-    <div class="hero-cake">
+    <!-- ANIMATED SNACK SCENE -->
 
-        <div class="cake-circle"></div>
+    <div class="snack-scene">
 
-        <div class="cake-emoji">
-            🎂
+        <div class="plate"></div>
+
+        <div class="snack snack1">
+            🥔
         </div>
 
-        <div class="float-item float1">
-            🍪
-        </div>
-
-        <div class="float-item float2">
+        <div class="snack snack2">
             🥨
         </div>
 
-        <div class="float-item float3">
-            🍩
+        <div class="snack snack3">
+            🥜
+        </div>
+
+        <div class="snack snack4">
+            🍘
+        </div>
+
+
+        <div class="particle p1">
+            ✨
+        </div>
+
+        <div class="particle p2">
+            ⭐
+        </div>
+
+        <div class="particle p3">
+            ✨
+        </div>
+
+        <div class="particle p4">
+            🟠
         </div>
 
     </div>
@@ -578,16 +701,16 @@ footer h2 {
 </section>
 
 
-<!-- MENU -->
+<!-- PRODUCTS -->
 
-<section class="section" id="menu">
+<section class="products" id="products">
 
-    <div class="section-title">
+    <div class="title">
 
-        <h2>🍰 Our Special Menu</h2>
+        <h2>🔥 Starfoods Snacks</h2>
 
         <p>
-            Fresh cakes, crispy snacks and tasty treats
+            Crispy. Fresh. Delicious.
         </p>
 
     </div>
@@ -595,49 +718,62 @@ footer h2 {
 
     <div class="filters">
 
-        <button class="filter-btn"
-                onclick="filterItems('all')">
+        <button
+            class="filter"
+            onclick="filterProducts('all')">
+
             All
+
         </button>
 
-        <button class="filter-btn"
-                onclick="filterItems('cake')">
-            🎂 Cakes
-        </button>
+        <button
+            class="filter"
+            onclick="filterProducts('chips')">
 
-        <button class="filter-btn"
-                onclick="filterItems('snack')">
-            🥨 Snacks
-        </button>
-
-        <button class="filter-btn"
-                onclick="filterItems('chips')">
             🥔 Chips
+
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterProducts('snacks')">
+
+            🥨 Snacks
+
         </button>
 
     </div>
 
 
-    <div class="food-grid" id="foodGrid">
+    <div class="grid">
 
-        {% for item in items %}
+        {% for product in products %}
 
-        <div class="card">
+        <div
+            class="card"
+            data-category="{{ product.category }}">
 
-            <div class="food-icon">
-                {{ item.emoji }}
+            <div class="product-icon">
+
+                {{ product.emoji }}
+
             </div>
 
             <h3>
-                {{ item.name }}
+
+                {{ product.name }}
+
             </h3>
 
             <div class="price">
-                ₹{{ item.price }}
+
+                ₹{{ product.price }}
+
             </div>
 
-            <button class="order-btn"
-                    onclick="orderItem('{{ item.name }}')">
+            <button
+                class="order"
+                onclick="orderProduct('{{ product.name }}')">
 
                 Order Now
 
@@ -659,10 +795,10 @@ footer h2 {
     <h2>⭐ Why Starfoods?</h2>
 
     <p>
-        At Starfoods, we bring you delicious bakery
-        products made with care. From celebration cakes
-        to crispy banana chips and traditional murukku,
-        every bite is made to bring a smile.
+        Starfoods brings you crispy and tasty snacks
+        made for every occasion. From crunchy chips
+        to traditional murukku and spicy mixtures,
+        every packet is packed with flavour.
     </p>
 
 </section>
@@ -675,7 +811,7 @@ footer h2 {
     <h2>⭐ Starfoods</h2>
 
     <p>
-        Fresh • Tasty • Homemade Taste
+        Crispy • Fresh • Tasty
     </p>
 
     <br>
@@ -687,7 +823,7 @@ footer h2 {
     <br>
 
     <p>
-        © 2026 Starfoods Bakery
+        © 2026 Starfoods
     </p>
 
 </footer>
@@ -695,10 +831,11 @@ footer h2 {
 
 <script>
 
-function orderItem(name) {
+
+function orderProduct(name) {
 
     alert(
-        "🍰 " + name +
+        "🛍️ " + name +
         " added to your order!\\n\\n" +
         "Thank you for choosing Starfoods ⭐"
     );
@@ -706,43 +843,33 @@ function orderItem(name) {
 }
 
 
-function filterItems(type) {
+function filterProducts(category) {
 
     const cards =
         document.querySelectorAll(".card");
 
+
     cards.forEach(card => {
 
-        card.style.display = "block";
+        const productCategory =
+            card.getAttribute("data-category");
 
-        if (type !== "all") {
 
-            const name =
-                card.querySelector("h3")
-                    .innerText
-                    .toLowerCase();
+        if (category === "all") {
 
-            if (type === "cake" &&
-                !name.includes("cake")) {
+            card.style.display = "block";
 
-                card.style.display = "none";
+        }
 
-            }
+        else if (productCategory === category) {
 
-            if (type === "chips" &&
-                !name.includes("chips")) {
+            card.style.display = "block";
 
-                card.style.display = "none";
+        }
 
-            }
+        else {
 
-            if (type === "snack" &&
-                (name.includes("cake") ||
-                 name.includes("chips"))) {
-
-                card.style.display = "none";
-
-            }
+            card.style.display = "none";
 
         }
 
@@ -761,9 +888,10 @@ function filterItems(type) {
 
 @app.route("/")
 def home():
+
     return render_template_string(
         HTML,
-        items=items
+        products=products
     )
 
 
