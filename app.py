@@ -17,7 +17,7 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Foodie - Food Delivery</title>
+    <title>starfoods - Food Delivery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
