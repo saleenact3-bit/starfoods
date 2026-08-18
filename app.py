@@ -17,7 +17,7 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>starfoods - Food Delivery</title>
+    <title>Starfoods - Food Delivery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -149,7 +149,7 @@ HTML = """
 <body>
 
 <nav>
-    <h1>🍴 Foodie</h1>
+    <h1>🍴 Starfoods</h1>
 
     <div>
         <a href="/">Home</a>
@@ -159,13 +159,13 @@ HTML = """
 </nav>
 
 <section class="hero">
-    <h2>Delicious Food, Delivered Fast!</h2>
-    <p>Fresh • Tasty • Affordable</p>
+    <h2>Welcome to Starfoods!</h2>
+    <p>Delicious Food • Fresh • Tasty • Affordable</p>
     <a href="#menu" class="btn">View Menu</a>
 </section>
 
 <section class="foods" id="menu">
-    <h2>🔥 Popular Foods</h2>
+    <h2>🔥 Starfoods Menu</h2>
 
     <div class="grid">
 
@@ -194,8 +194,8 @@ HTML = """
 </section>
 
 <footer id="contact">
-    <p>📞 Contact: 9656640161</p>
-    <p>© 2026 Foodie. All Rights Reserved.</p>
+    <p>📞 Contact: 98765 43210</p>
+    <p>© 2026 Starfoods. All Rights Reserved.</p>
 </footer>
 
 </body>
