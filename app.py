@@ -3,7 +3,8 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 products = [
-    ("Banana Chips", "₹120", "static/micher.png"),
+    ("Banana Chips", "₹120",<img
+            src="/static/micher.png">)
     ("Spicy Chips", "₹140", "static/micher.png"),
     ("Murukku", "₹150", "static/micher.png"),
     ("Special Mixture", "₹160", "static/micher.png"),
