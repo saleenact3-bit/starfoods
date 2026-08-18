@@ -3,12 +3,12 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 products = [
-    ("Banana Chips", "₹120", "micher.png"),
-    ("Spicy Chips", "₹140", "micher.png"),
-    ("Murukku", "₹150", "micher.png"),
-    ("Special Mixture", "₹160", "micher.png"),
-    ("Masala Peanuts", "₹130", "micher.png"),
-    ("Nippattu", "₹140", "micher.png"),
+    ("Banana Chips", "₹120", "static/micher.png"),
+    ("Spicy Chips", "₹140", "static/micher.png"),
+    ("Murukku", "₹150", "static/micher.png"),
+    ("Special Mixture", "₹160", "static/micher.png"),
+    ("Masala Peanuts", "₹130", "static/micher.png"),
+    ("Nippattu", "₹140", "static/micher.png"),
 ]
 
 HTML = """
@@ -643,7 +643,7 @@ footer h2 {
         <!-- REAL PACKET IMAGE -->
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="packet"
         >
 
@@ -651,7 +651,7 @@ footer h2 {
         <!-- REAL PLATE IMAGE -->
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="plate"
         >
 
@@ -659,27 +659,27 @@ footer h2 {
         <!-- REAL CHIP IMAGES -->
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="chip chip1"
         >
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="chip chip2"
         >
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="chip chip3"
         >
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="chip chip4"
         >
 
         <img
-            src="/static/images/micher.png"
+            src="/static/micher.png"
             class="chip chip5"
         >
 
